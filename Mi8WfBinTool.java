@@ -678,8 +678,7 @@ public class Mi8WfBinTool {
             ArrayList<byte[]> payloads = new ArrayList<>();
             for (BufferedImage img : imgs) {
                 boolean alpha = true;
-                if (DEVICE_TYPE.equals("mi7pro") || DEVICE_TYPE.equals("mi8pro"))
-                    alpha = true;
+                if (DEVICE_TYPE.equals("mi7pro") || DEVICE_TYPE.equals("mi8pro")) alpha = true;
                 int bpp;
                 byte[] pix;
                 if (sign == 0x10) {
@@ -1294,6 +1293,7 @@ public class Mi8WfBinTool {
         static final class JSResourceBytes {
             String name;
             byte[] bytes;
+
             JSResourceBytes(String n, byte[] b) {
                 this.name = n;
                 this.bytes = b;
@@ -1354,7 +1354,8 @@ public class Mi8WfBinTool {
                     String n = p.getFileName().toString();
                     if (n.endsWith(".png")) n = n.substring(0, n.length() - 4);
                     int imageIdx = fixedImageIndex(n);
-                    if (imageIdx >= 0 && (allowedSingles == null || allowedSingles.contains(imageIdx))) imageNames.add(n);
+                    if (imageIdx >= 0 && (allowedSingles == null || allowedSingles.contains(imageIdx)))
+                        imageNames.add(n);
                     int u = n.lastIndexOf('_');
                     String base = u > 0 ? n.substring(0, u) : "";
                     int listIdx = fixedListIndex(base);
@@ -1571,7 +1572,8 @@ public class Mi8WfBinTool {
             HashSet<Integer> used = new HashSet<>();
             for (ExtraDef d : extra) used.add(d.idx);
             for (Map<String, Object> e : elements) {
-                if ("element_editable".equals(str(e.get("type"))) && e.containsKey("prop8Index")) used.add(num(e.get("prop8Index"), 0));
+                if ("element_editable".equals(str(e.get("type"))) && e.containsKey("prop8Index"))
+                    used.add(num(e.get("prop8Index"), 0));
             }
             int next = 0;
             for (Map<String, Object> e : elements) {
@@ -1606,8 +1608,7 @@ public class Mi8WfBinTool {
         static List<Map<String, Object>> filterProp9Elements(List<Map<String, Object>> es) {
             ArrayList<Map<String, Object>> r = new ArrayList<>();
             for (Map<String, Object> e : es)
-                if (isProp9Element(e))
-                    r.add(e);
+                if (isProp9Element(e)) r.add(e);
             return r;
         }
 
@@ -1687,7 +1688,7 @@ public class Mi8WfBinTool {
 
         static int imageEnd(int start, FaceData f) {
             int o = start;
-            for(ImgDef u : f.uniqueImages) o += u.len;
+            for (ImgDef u : f.uniqueImages) o += u.len;
             return o;
         }
 
@@ -2520,7 +2521,8 @@ public class Mi8WfBinTool {
         static void readJs(byte[] data, int p, int len, Map<String, Object> e, Path imgDir) throws Exception {
             JsRead js = parseJsResource(data, p, len);
             e.put("jsFileName", js.name);
-            if (str(e.get("type")).isEmpty()) e.put("type", js.name.toLowerCase(Locale.ROOT).endsWith(".lua") ? "type_element_lua" : "type_element_js");
+            if (str(e.get("type")).isEmpty())
+                e.put("type", js.name.toLowerCase(Locale.ROOT).endsWith(".lua") ? "type_element_lua" : "type_element_js");
             if (js.raw.length > 0) Files.write(imgDir.resolve(js.name), js.raw);
         }
 

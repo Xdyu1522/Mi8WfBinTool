@@ -2530,7 +2530,7 @@ public class Mi8WfBinTool {
                     Files.createDirectories(parent);
                 }
             Files.write(file, js.raw);
-        }
+            }
         }
 
         static JsRead parseJsResource(byte[] data, int p, int len) {

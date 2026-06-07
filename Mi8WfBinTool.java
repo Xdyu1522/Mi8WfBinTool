@@ -2523,7 +2523,14 @@ public class Mi8WfBinTool {
             e.put("jsFileName", js.name);
             if (str(e.get("type")).isEmpty())
                 e.put("type", js.name.toLowerCase(Locale.ROOT).endsWith(".lua") ? "type_element_lua" : "type_element_js");
-            if (js.raw.length > 0) Files.write(imgDir.resolve(js.name), js.raw);
+            if (js.raw.length > 0) {
+                Path file = imgDir.resolve(js.name);
+                Path parent = file.getParent();
+                if (parent != null) {
+                    Files.createDirectories(parent);
+                }
+            Files.write(file, js.raw);
+        }
         }
 
         static JsRead parseJsResource(byte[] data, int p, int len) {
